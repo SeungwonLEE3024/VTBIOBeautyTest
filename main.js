@@ -201,25 +201,31 @@ class VideoSection extends HTMLElement {
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
-        .video-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 1rem;
-            border: 1px solid #f5c6cb;
-            border-radius: .25rem;
-            text-align: center;
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
         }
-        .video-error a {
-            color: #721c24;
-            font-weight: bold;
-            text-decoration: underline;
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
       </style>
       <section id="video" class="section">
         <h2>알츠하이머와 조절T세포와의 관계</h2>
-        <div class="video-error">
-          <p>영상 소유자의 설정으로 인해 이 페이지에서 동영상을 재생할 수 없습니다.</p>
-          <p><a href="https://www.youtube.com/watch?v=u3DJyctwSr0" target="_blank">YouTube에서 직접 보기</a></p>
+        <div class="video-container">
+          <iframe 
+            src="https://www.youtube.com/embed/u3DJyctwSr0" 
+            title="YouTube video player" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
         </div>
       </section>
     `;

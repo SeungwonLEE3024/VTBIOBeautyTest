@@ -221,9 +221,11 @@ class VideoSection extends HTMLElement {
         <h2>알츠하이머와 조절T세포와의 관계</h2>
         <div class="video-container">
           <iframe 
-            src="https://www.youtube.com/embed/u3DJyctwSr0" 
+            src="https://www.youtube.com/embed/u3DJyctwSr0?si=zkAWRBS1XrP7_ET4" 
             title="YouTube video player" 
+            frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
             allowfullscreen>
           </iframe>
         </div>

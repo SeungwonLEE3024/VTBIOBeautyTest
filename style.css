@@ -1,96 +1,80 @@
 
 :root {
-    --primary-color: #005A9C; 
-    --secondary-color: #F2F2F2;
-    --text-color: #333;
-    --light-gray: #f4f4f4;
-    --dark-gray: #555;
-    --white: #fff;
-    --shadow: 0 4px 8px rgba(0,0,0,0.1);
+    /* Modern OKLCH Colors */
+    --primary: oklch(45.2% 0.16 250.2); /* Deep Trustworthy Blue */
+    --accent: oklch(65% 0.15 190.1);  /* Medical Teal/Aqua */
+    --bg-main: oklch(98% 0.01 250);   /* Near White with a hint of cool blue */
+    --bg-surface: oklch(100% 0 0);    /* Pure White */
+    --text-bold: oklch(25% 0.02 250);
+    --text-regular: oklch(45% 0.02 250);
+    --white: #ffffff;
+    
+    /* Shadows & Depth */
+    --shadow-sm: 0 2px 4px oklch(0% 0 0 / 5%);
+    --shadow-md: 0 8px 16px -4px oklch(0% 0 0 / 8%), 0 4px 8px -4px oklch(0% 0 0 / 4%);
+    --shadow-lg: 0 20px 25px -5px oklch(0% 0 0 / 10%), 0 10px 10px -5px oklch(0% 0 0 / 4%);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 8rem;
 }
 
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 0;
-    background-color: var(--secondary-color);
-    color: var(--text-color);
+@layer base {
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-regular);
+        line-height: 1.6;
+        overflow-x: hidden;
+        /* Subtle noise texture */
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        background-blend-mode: overlay;
+        background-attachment: fixed;
+    }
+
+    h1, h2, h3 {
+        color: var(--text-bold);
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+    }
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0 var(--spacing-md);
 }
 
-.hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://plus.unsplash.com/premium_photo-1676642738222-949d8a573333?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-    height: 60vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: var(--white);
+/* Global utility for consistent section spacing */
+section {
+    padding: var(--spacing-lg) 0;
 }
 
-.hero-text h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.hero-text p {
-    font-size: 1.2rem;
-}
-
-.section {
-    background-color: var(--white);
-    margin-bottom: 2rem;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-}
-
-.section h2 {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.pipeline-grid, .research-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.pipeline-item, .research-item {
-    background-color: var(--light-gray);
-    padding: 1.5rem;
-    border-radius: 8px;
-}
-
-.pipeline-item h3, .research-item h3 {
-    color: var(--primary-color);
-    margin-top: 0;
-}
-
-.video-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.video-item {
-    text-align: center;
-}
-
-footer {
-    background-color: var(--dark-gray);
-    color: var(--white);
-    text-align: center;
-    padding: 2rem;
+.animate-in {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

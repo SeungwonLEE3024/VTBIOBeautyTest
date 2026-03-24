@@ -1,26 +1,36 @@
 
-# Blueprint: VT BIO Gihub page
+# Blueprint: VT BIO Informational Website
 
 ## Overview
 
-This document outlines the plan for creating a modern, single-page informational website for VT BIO. The website will be built using HTML, CSS, and JavaScript, following modern web standards and best practices. It will feature a clean, responsive design, and will be easily maintainable.
+This document outlines the plan for creating a modern, premium single-page informational website for **VT BIO**, a leading biotechnology company specializing in cell therapies for degenerative brain diseases. The website is built using framework-less Web Components (HTML, CSS, JavaScript) and adheres to modern web standards (Baseline).
 
-## Current Design and Features (Initial Version)
+## Current Design and Features
 
-*   **Structure:** Single-page layout with a clear and intuitive flow.
-*   **Components:** The application will be built using Web Components for modularity and reusability. The following components will be created:
-    *   `<main-header>`: Contains the company logo and navigation links.
-    *   `<hero-section>`: A prominent introductory section with a background image and a brief company slogan.
-    *   `<pipeline-section>`: Details the company's research and development pipeline.
-    *   `<research-section>`: Describes the current research status and projects.
-    *   `<video-section>`: A section to embed YouTube videos.
-    *   `<main-footer>`: Contains contact information and other relevant links.
-*   **Styling:** Modern CSS will be used for styling, including CSS variables for easy theming, a responsive layout, and visually appealing elements. The design will be clean, professional, and aligned with the branding of a biotech company.
-*   **Content:** All content will be provided in Korean, as requested.
+*   **Structure:** Single-page responsive layout.
+*   **Architecture:** Modular Web Components for scalability and encapsulation.
+*   **Key Sections:**
+    *   `<main-header>`: Sticky navigation with company branding.
+    *   `<hero-section>`: High-impact introduction to VT BIO's mission.
+    *   `<pipeline-section>`: Detailed view of R&D candidates (VT301, VT012, etc.).
+    *   `<research-section>`: Overview of core technology and clinical milestones.
+    *   `<video-section>`: Embedded educational content on T-cell therapy.
+    *   `<main-footer>`: Corporate info and copyright.
 
-## Plan for Current Request
+## Design Strategy (Premium Aesthetic)
 
-1.  **Create `blueprint.md`:** Establish the project's foundation and plan. (Completed)
-2.  **Update `index.html`:** Replace the existing content with the new structure, including the custom element tags for the different sections of the page.
-3.  **Update `style.css`:** Add all necessary styles for the layout, typography, colors, and other visual elements.
-4.  **Update `main.js`:** Define the custom elements and their corresponding templates and logic. This will include creating the header, hero, pipeline, research, video, and footer components.
+1.  **Typography:** Utilize 'Noto Sans KR' with high-contrast font weights and sizes (e.g., 4rem for hero text) to emphasize authority.
+2.  **Color Palette:** Use `oklch` for vibrant, perceptually uniform colors (Primary: Deep Blue, Secondary: Medical Teal).
+3.  **Depth & Texture:**
+    *   Apply subtle grain/noise texture to backgrounds for a premium feel.
+    *   Use multi-layered `box-shadow` to create a sense of "lift" for cards.
+4.  **Interactivity:** Smooth transitions and "glow" effects on interactive elements.
+
+## Plan for Current Request (Content & UI Update)
+
+1.  **Research-Driven Content Update:** 
+    *   Update `main.js` to replace placeholders with real data: **VT301** (Regulatory T Cell Therapy for Alzheimer's), **VT012** (Herbal formula for neurogenesis), and clinical status (US FDA Phase 1/2a).
+2.  **Visual Overhaul:**
+    *   Revise `style.css` with modern CSS features (`oklch`, container queries, `:has()`).
+    *   Enhance component templates in `main.js` with better styling and structural layout.
+3.  **Deployment Verification:** Prepare for Cloudflare Pages integration.

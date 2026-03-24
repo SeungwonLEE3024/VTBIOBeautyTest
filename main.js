@@ -1,36 +1,81 @@
 
+const sharedStyles = `
+  :host {
+    display: block;
+    --primary: oklch(45.2% 0.16 250.2);
+    --accent: oklch(65% 0.15 190.1);
+    --text-bold: oklch(25% 0.02 250);
+    --text-regular: oklch(45% 0.02 250);
+    --bg-surface: oklch(100% 0 0);
+    --shadow-md: 0 8px 16px -4px oklch(0% 0 0 / 8%), 0 4px 8px -4px oklch(0% 0 0 / 4%);
+    --shadow-lg: 0 20px 25px -5px oklch(0% 0 0 / 10%), 0 10px 10px -5px oklch(0% 0 0 / 4%);
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .animate-in {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+`;
+
 class MainHeader extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
       <style>
+        ${sharedStyles}
         header {
-          background-color: var(--primary-color, #005A9C);
-          color: var(--white, #fff);
-          padding: 1rem 2rem;
+          background: rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          border-bottom: 1px solid oklch(0% 0 0 / 5%);
+        }
+        header .container {
+          height: 80px;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          box-shadow: var(--shadow, 0 4px 8px rgba(0,0,0,0.1));
         }
         .logo {
           font-size: 1.5rem;
-          font-weight: bold;
+          font-weight: 900;
+          color: var(--primary);
+          letter-spacing: -0.05em;
+        }
+        nav {
+          display: flex;
+          gap: 2rem;
         }
         nav a {
-          color: var(--white, #fff);
           text-decoration: none;
-          margin: 0 1rem;
+          color: var(--text-bold);
+          font-weight: 600;
+          font-size: 0.95rem;
+          transition: color 0.3s ease;
+        }
+        nav a:hover {
+          color: var(--accent);
         }
       </style>
       <header>
-        <div class="logo">VT BIO</div>
-        <nav>
-          <a href="#pipeline">파이프라인</a>
-          <a href="#research">연구 현황</a>
-          <a href="#video">홍보 영상</a>
-        </nav>
+        <div class="container">
+          <div class="logo">VT BIO</div>
+          <nav>
+            <a href="#pipeline">파이프라인</a>
+            <a href="#research">연구 및 기술</a>
+            <a href="#video">홍보 영상</a>
+          </nav>
+        </div>
       </header>
     `;
   }
@@ -42,30 +87,68 @@ class HeroSection extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
       <style>
+        ${sharedStyles}
         .hero {
-          background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://plus.unsplash.com/premium_photo-1676642738222-949d8a573333?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-          height: 60vh;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
+          position: relative;
+          height: 80vh;
+          min-height: 600px;
           display: flex;
-          justify-content: center;
           align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          background: var(--primary);
+        }
+        .hero-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0.4;
+          filter: grayscale(100%) brightness(0.7);
+        }
+        .content {
+          position: relative;
+          z-index: 1;
           text-align: center;
-          color: var(--white, #fff);
+          max-width: 900px;
+          padding: 0 2rem;
+          color: white;
         }
-        .hero-text h1 {
-          font-size: 3rem;
-          margin-bottom: 1rem;
+        h1 {
+          font-size: clamp(2.5rem, 8vw, 4.5rem);
+          font-weight: 900;
+          line-height: 1.1;
+          margin-bottom: 1.5rem;
+          letter-spacing: -0.02em;
         }
-        .hero-text p {
-          font-size: 1.2rem;
+        p {
+          font-size: clamp(1.1rem, 3vw, 1.5rem);
+          opacity: 0.9;
+          font-weight: 300;
+          max-width: 700px;
+          margin: 0 auto;
+        }
+        .badge {
+          display: inline-block;
+          padding: 0.5rem 1.5rem;
+          background: var(--accent);
+          color: var(--primary);
+          border-radius: 100px;
+          font-weight: 800;
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          margin-bottom: 2rem;
+          letter-spacing: 0.1em;
         }
       </style>
       <section class="hero">
-        <div class="hero-text">
-          <h1>VT BIO: 혁신적인 기술로 인류의 건강을 선도합니다.</h1>
-          <p>차세대 항체 치료제 및 진단 기술 개발</p>
+        <img class="hero-bg" src="https://images.unsplash.com/photo-1579154273821-ad82e189f666?q=80&w=2070&auto=format&fit=crop" alt="Biotech Lab">
+        <div class="content animate-in">
+          <div class="badge">Innovation in Cell Therapy</div>
+          <h1>혁신적인 조절T세포 기술로<br>치매 치료의 새 시대를 엽니다.</h1>
+          <p>VT BIO는 환자 자신의 면역 세포를 활용하여 알츠하이머의 근본 원인을 해결하는 차세대 세포 치료제를 개발합니다.</p>
         </div>
       </section>
     `;
@@ -78,48 +161,91 @@ class PipelineSection extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
       <style>
+        ${sharedStyles}
         .section {
-            background-color: var(--white, #fff);
-            margin-bottom: 2rem;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow, 0 4px 8px rgba(0,0,0,0.1));
+          padding: 4rem 0;
         }
-        .section h2 {
-            color: var(--primary-color, #005A9C);
-            border-bottom: 2px solid var(--primary-color, #005A9C);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+        h2 {
+          font-size: 2.5rem;
+          margin-bottom: 3rem;
+          text-align: center;
+          position: relative;
         }
-        .pipeline-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+        h2::after {
+          content: '';
+          display: block;
+          width: 50px;
+          height: 4px;
+          background: var(--accent);
+          margin: 1rem auto;
         }
-        .pipeline-item {
-            background-color: var(--light-gray, #f4f4f4);
-            padding: 1.5rem;
-            border-radius: 8px;
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 2rem;
         }
-        .pipeline-item h3 {
-            color: var(--primary-color, #005A9C);
-            margin-top: 0;
+        .card {
+          background: var(--bg-surface);
+          padding: 3rem;
+          border-radius: 24px;
+          box-shadow: var(--shadow-md);
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          border: 1px solid oklch(0% 0 0 / 3%);
+          position: relative;
+          overflow: hidden;
+        }
+        .card:hover {
+          transform: translateY(-10px);
+          box-shadow: var(--shadow-lg);
+          border-color: var(--accent);
+        }
+        .card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 4px;
+          height: 100%;
+          background: var(--primary);
+        }
+        .status {
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: var(--accent);
+          text-transform: uppercase;
+          margin-bottom: 1rem;
+          display: block;
+        }
+        h3 {
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+          color: var(--primary);
+        }
+        p {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: var(--text-regular);
         }
       </style>
       <section id="pipeline" class="section">
-        <h2>파이프라인</h2>
-        <div class="pipeline-grid">
-          <div class="pipeline-item">
-            <h3>VT-001: 차세대 항체 치료제</h3>
-            <p>VT-001은 특정 암세포에만 선택적으로 작용하는 혁신적인 항체 치료제입니다. 기존 항암 치료의 부작용을 최소화하고 치료 효과를 극대화하는 것을 목표로 합니다.</p>
-          </div>
-          <div class="pipeline-item">
-            <h3>VT-002: AI 기반 신약 개발 플랫폼</h3>
-            <p>VT-002는 인공지능을 활용하여 신약 후보물질을 신속하고 정확하게 발굴하는 플랫폼입니다. 이를 통해 신약 개발 기간과 비용을 획기적으로 단축시킬 수 있습니다.</p>
-          </div>
-          <div class="pipeline-item">
-            <h3>VT-003: 질병 조기 진단 키트</h3>
-            <p>VT-003은 소량의 혈액으로 다양한 질병을 조기에 진단할 수 있는 고감도 진단 키트입니다. 질병의 조기 발견 및 예방에 기여할 것으로 기대됩니다.</p>
+        <div class="container animate-in">
+          <h2>R&D 파이프라인</h2>
+          <div class="grid">
+            <div class="card">
+              <span class="status">Phase 1/2a (USA)</span>
+              <h3>VT301: 조절T세포 치료제</h3>
+              <p>환자 본인의 혈액에서 분리한 조절T세포를 배양하여 뇌의 신경 염증을 억제하고 면역 균형을 회복시키는 알츠하이머병 근본 치료제입니다.</p>
+            </div>
+            <div class="card">
+              <span class="status">Pre-clinical</span>
+              <h3>VT012: 천연물 기반 치매 치료</h3>
+              <p>전통 약재인 육미지황탕가감방(PM012)을 현대 과학으로 재해석하여 인지 기능 개선 및 신경 재생 효과를 입증한 천연물 유래 신약 후보물질입니다.</p>
+            </div>
+            <div class="card">
+              <span class="status">Research</span>
+              <h3>면역 조절 플랫폼 기술</h3>
+              <p>조절T세포의 체내 이동 및 활성화를 최적화하는 독자적인 플랫폼 기술을 통해 다양한 퇴행성 뇌질환으로의 적응증 확장을 연구합니다.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -133,49 +259,71 @@ class ResearchSection extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
       <style>
+        ${sharedStyles}
         .section {
-            background-color: var(--white, #fff);
-            margin-bottom: 2rem;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow, 0 4px 8px rgba(0,0,0,0.1));
+          background: oklch(20% 0.05 250);
+          color: white;
+          padding: 6rem 0;
+          margin: 4rem 0;
         }
-        .section h2 {
-            color: var(--primary-color, #005A9C);
-            border-bottom: 2px solid var(--primary-color, #005A9C);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+        .grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 4rem;
+          align-items: center;
         }
-        .research-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+        @media (max-width: 768px) {
+          .grid { grid-template-columns: 1fr; }
         }
-        .research-item {
-            background-color: var(--light-gray, #f4f4f4);
-            padding: 1.5rem;
-            border-radius: 8px;
+        h2 {
+          color: white;
+          font-size: 2.5rem;
+          margin-bottom: 2rem;
         }
-        .research-item h3 {
-            color: var(--primary-color, #005A9C);
-            margin-top: 0;
+        .feature {
+          margin-bottom: 2rem;
+        }
+        .feature h3 {
+          color: var(--accent);
+          margin-bottom: 0.5rem;
+        }
+        .feature p {
+          opacity: 0.8;
         }
       </style>
       <section id="research" class="section">
-        <h2>연구 현황</h2>
-        <div class="research-grid">
-            <div class="research-item">
-                <h3>항체 라이브러리 구축</h3>
-                <p>다양한 질병에 대응할 수 있는 대규모 항체 라이브러리를 구축하고 있습니다. 이는 신약 개발의 핵심 자원으로 활용될 것입니다.</p>
+        <div class="container animate-in">
+          <div class="grid">
+            <div>
+              <h2>글로벌 임상 및 기술 경쟁력</h2>
+              <p style="margin-bottom: 2rem; opacity: 0.9;">VT BIO는 국내외 최고의 연구진과 협력하여 세포 치료제의 한계를 극복하고 있습니다.</p>
+              <div class="feature">
+                <h3>미국 FDA 임상 진행</h3>
+                <p>국내 바이오 벤처 최초로 조절T세포 기반 치매 치료제의 미국 FDA 임상 1/2a상 승인을 획득하여 글로벌 경쟁력을 입증했습니다.</p>
+              </div>
+              <div class="feature">
+                <h3>독자적 배양 기술</h3>
+                <p>세포의 활성도를 유지하면서 대량 배양할 수 있는 독자적인 공정 기술을 보유하여 상용화 가능성을 높였습니다.</p>
+              </div>
             </div>
-            <div class="research-item">
-                <h3>전임상 시험 진행</h3>
-                <p>VT-001의 전임상 시험을 진행 중이며, 초기 결과에서 긍정적인 데이터를 확보했습니다. 2024년 임상 1상 진입을 목표로 하고 있습니다.</p>
+            <div style="background: rgba(255,255,255,0.05); padding: 3rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);">
+              <h3 style="color: white; margin-bottom: 1.5rem;">연구 성과</h3>
+              <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+                  <span style="color: var(--accent);">✔</span>
+                  <span>Nature Communications 등 세계적 학술지 논문 게재</span>
+                </li>
+                <li style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+                  <span style="color: var(--accent);">✔</span>
+                  <span>조절T세포 동결 및 해동 원천 기술 특허 확보</span>
+                </li>
+                <li style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+                  <span style="color: var(--accent);">✔</span>
+                  <span>보건복지부 국가 R&D 과제 수행 기관 선정</span>
+                </li>
+              </ul>
             </div>
-            <div class="research-item">
-                <h3>AI 알고리즘 고도화</h3>
-                <p>VT-002 플랫폼의 AI 알고리즘을 지속적으로 고도화하여 신약 후보물질 발굴의 정확도와 속도를 향상시키고 있습니다.</p>
-            </div>
+          </div>
         </div>
       </section>
     `;
@@ -188,46 +336,40 @@ class VideoSection extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
       <style>
+        ${sharedStyles}
         .section {
-            background-color: var(--white, #fff);
-            margin-bottom: 2rem;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow, 0 4px 8px rgba(0,0,0,0.1));
+          padding: 4rem 0;
+          text-align: center;
         }
-        .section h2 {
-            color: var(--primary-color, #005A9C);
-            border-bottom: 2px solid var(--primary-color, #005A9C);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+        h2 {
+          margin-bottom: 3rem;
         }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: 8px;
+        .video-wrapper {
+          max-width: 1000px;
+          margin: 0 auto;
+          aspect-ratio: 16/9;
+          background: #000;
+          border-radius: 32px;
+          overflow: hidden;
+          box-shadow: var(--shadow-lg);
         }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
         }
       </style>
       <section id="video" class="section">
-        <h2>알츠하이머와 조절T세포와의 관계</h2>
-        <div class="video-container">
-          <iframe 
-            src="https://www.youtube.com/embed/u3DJyctwSr0?si=zkAWRBS1XrP7_ET4" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen>
-          </iframe>
+        <div class="container animate-in">
+          <h2>세포 치료의 원리 이해</h2>
+          <div class="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/u3DJyctwSr0" 
+              title="VT BIO Technology" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
       </section>
     `;
@@ -240,20 +382,34 @@ class MainFooter extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
       <style>
+        ${sharedStyles}
         footer {
-            background-color: var(--dark-gray, #555);
-            color: var(--white, #fff);
-            text-align: center;
-            padding: 2rem;
+          padding: 6rem 2rem;
+          background: oklch(10% 0 0);
+          color: rgba(255,255,255,0.6);
+          text-align: center;
+        }
+        .logo {
+          color: white;
+          font-size: 1.5rem;
+          font-weight: 900;
+          margin-bottom: 2rem;
+          display: block;
+        }
+        p {
+          font-size: 0.9rem;
+          margin-bottom: 0.5rem;
         }
       </style>
       <footer>
-        <p>&copy; 2024 VT BIO. All rights reserved.</p>
+        <span class="logo">VT BIO</span>
+        <p>서울특별시 강남구 삼성로 76길 23, 4층 (대치동, 비티빌딩)</p>
+        <p>Email: contact@vtbio.co.kr | Tel: 02-1234-5678</p>
+        <p style="margin-top: 3rem;">&copy; 2024 VT BIO. All rights reserved.</p>
       </footer>
     `;
   }
 }
-
 
 customElements.define('main-header', MainHeader);
 customElements.define('hero-section', HeroSection);

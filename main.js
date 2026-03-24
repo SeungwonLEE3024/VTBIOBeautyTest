@@ -852,8 +852,8 @@ class DisqusComments extends HTMLElement {
     `;
 
     window.disqus_config = function () {
-      this.page.url = window.location.href;
-      this.page.identifier = window.location.pathname;
+      this.page.url = 'https://seungwonlee3024.github.io/VTBIOBeautyTest/';
+      this.page.identifier = 'vtbio-main';
     };
 
     const d = document;

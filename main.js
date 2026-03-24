@@ -119,6 +119,7 @@ class MainHeader extends HTMLElement {
               <a href="#pipeline">파이프라인</a>
               <a href="#research">연구 및 기술</a>
               <a href="#video">홍보 영상</a>
+              <a href="#partnership">제휴 문의</a>
             </nav>
             <button class="theme-toggle" id="theme-btn">
               ${themeIcon}
@@ -689,7 +690,155 @@ class DinnerRecommendation extends HTMLElement {
   }
 }
 
+class PartnershipSection extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        ${sharedStyles}
+        .section {
+          padding: 8rem 2rem;
+          background: var(--bg-surface);
+          border-top: 1px solid oklch(0% 0 0 / 5%);
+        }
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+        h2 {
+          text-align: center;
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+          color: var(--primary);
+        }
+        p.subtitle {
+          text-align: center;
+          color: var(--text-regular);
+          margin-bottom: 4rem;
+          font-size: 1.1rem;
+        }
+        form {
+          display: grid;
+          gap: 1.5rem;
+          background: var(--bg-main);
+          padding: 3rem;
+          border-radius: 24px;
+          box-shadow: var(--shadow-lg);
+          border: 1px solid oklch(0% 0 0 / 5%);
+        }
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        label {
+          font-weight: 700;
+          color: var(--text-bold);
+          font-size: 0.9rem;
+        }
+        input, textarea {
+          padding: 1rem;
+          border-radius: 12px;
+          border: 1px solid oklch(0% 0 0 / 10%);
+          background: var(--bg-surface);
+          color: var(--text-bold);
+          font-family: inherit;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+          outline: none;
+          border-color: var(--accent);
+          box-shadow: 0 0 0 4px oklch(65% 0.15 190.1 / 15%);
+        }
+        button[type="submit"] {
+          background: var(--primary);
+          color: white;
+          border: none;
+          padding: 1.2rem;
+          border-radius: 12px;
+          font-size: 1.1rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-top: 1rem;
+        }
+        button[type="submit"]:hover {
+          background: var(--accent);
+          color: var(--primary);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+        .grid-2 {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+        }
+        @media (max-width: 600px) {
+          .grid-2 {
+            grid-template-columns: 1fr;
+          }
+          form {
+            padding: 1.5rem;
+          }
+        }
+      </style>
+      <section class="section" id="partnership">
+        <div class="container animate-in">
+          <h2>🤝 제휴 및 협력 문의</h2>
+          <p class="subtitle">브이티바이오와 함께 혁신적인 미래를 만들어갈 파트너를 기다립니다.</p>
+          
+          <form action="https://formspree.io/f/mreynjwr" method="POST">
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="company">회사명/기관명</label>
+                <input type="text" id="company" name="company" placeholder="예: (주)브이티바이오" required>
+              </div>
+              <div class="form-group">
+                <label for="name">담당자 성함</label>
+                <input type="text" id="name" name="name" placeholder="홍길동" required>
+              </div>
+            </div>
+            
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="email">이메일 주소</label>
+                <input type="email" id="email" name="_replyto" placeholder="example@email.com" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">연락처</label>
+                <input type="tel" id="phone" name="phone" placeholder="010-1234-5678">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="subject">문의 제목</label>
+              <input type="text" id="subject" name="_subject" placeholder="제휴 문의 드립니다." required>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">문의 내용</label>
+              <textarea id="message" name="message" rows="5" placeholder="상세한 문의 내용을 입력해주세요." required></textarea>
+            </div>
+            
+            <button type="submit">문의 메시지 보내기</button>
+          </form>
+        </div>
+      </section>
+    `;
+  }
+}
+
 customElements.define('dinner-recommendation', DinnerRecommendation);
+customElements.define('partnership-section', PartnershipSection);
 customElements.define('hero-section', HeroSection);
 customElements.define('pipeline-section', PipelineSection);
 customElements.define('research-section', ResearchSection);

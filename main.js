@@ -837,6 +837,28 @@ class PartnershipSection extends HTMLElement {
   }
 }
 
+class DisqusComments extends HTMLElement {
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = `
+      <section class="section container" style="padding: 4rem 2rem; background: var(--bg-surface); border-radius: 24px; margin: 4rem auto; box-shadow: var(--shadow-md);">
+        <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary);">💬 커뮤니티 의견</h2>
+        <div id="disqus_thread"></div>
+      </section>
+    `;
+
+    const d = document;
+    const s = d.createElement('script');
+    s.src = 'https://vtbiobeautytest-pages-dev.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+}
+
+customElements.define('disqus-comments', DisqusComments);
 customElements.define('dinner-recommendation', DinnerRecommendation);
 customElements.define('partnership-section', PartnershipSection);
 customElements.define('hero-section', HeroSection);

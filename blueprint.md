@@ -1,36 +1,39 @@
+# **VT BIO Intro Project Blueprint**
 
-# Blueprint: VT BIO Informational Website
+## **Project Overview**
+VT BIO의 혁신적인 조절T세포(Treg) 치료제 기술을 소개하는 모던하고 전문적인 웹사이트입니다.
 
-## Overview
+## **Features & Design**
 
-This document outlines the plan for creating a modern, premium single-page informational website for **VT BIO**, a leading biotechnology company specializing in cell therapies for degenerative brain diseases. The website is built using framework-less Web Components (HTML, CSS, JavaScript) and adheres to modern web standards (Baseline).
+### **Design Strategy**
+*   **Aesthetics:** 신뢰감을 주는 Deep Blue (`oklch(45.2% 0.16 250.2)`)와 혁신을 상징하는 Medical Teal (`oklch(65% 0.15 190.1)`) 컬러 팔레트 사용.
+*   **Modern CSS:** OKLCH 컬러 공간, Container Queries, Cascade Layers (`@layer`) 활용.
+*   **Interactive UI:** Shadow DOM 기반의 Web Components로 캡슐화된 컴포넌트 개발.
+*   **Dark Mode Support:** 사용자의 기본 설정 및 수동 토글을 통한 다크/화이트 모드 지원. `localStorage`를 통한 테마 상태 유지.
 
-## Current Design and Features
+### **Core Components**
+*   **`main-header`**: 상단 고정 네비게이션 및 테마 토글 버튼.
+*   **`hero-section`**: 강렬한 비주얼과 메인 슬로건.
+*   **`pipeline-section`**: R&D 진행 상황을 보여주는 카드형 레이아웃.
+*   **`research-section`**: 기술적 우위와 연구 성과 요약.
+*   **`video-section`**: 유튜브 API 연동 홍보 영상 섹션.
+*   **`main-footer`**: 기업 정보 및 연락처.
 
-*   **Structure:** Single-page responsive layout.
-*   **Architecture:** Modular Web Components for scalability and encapsulation.
-*   **Key Sections:**
-    *   `<main-header>`: Sticky navigation with company branding.
-    *   `<hero-section>`: High-impact introduction to VT BIO's mission.
-    *   `<pipeline-section>`: Detailed view of R&D candidates (VT301, VT012, etc.).
-    *   `<research-section>`: Overview of core technology and clinical milestones.
-    *   `<video-section>`: Embedded educational content on T-cell therapy.
-    *   `<main-footer>`: Corporate info and copyright.
+## **Implementation Details**
 
-## Design Strategy (Premium Aesthetic)
+### **Theme System**
+*   `style.css`의 `:root`와 `[data-theme="dark"]`를 통해 전역 CSS 변수 관리.
+*   `main.js`의 `sharedStyles`에서 전역 변수를 참조하여 Web Components의 Shadow DOM 내 스타일 동기화.
+*   `localStorage`를 사용하여 사용자 테마 선호도 저장.
 
-1.  **Typography:** Utilize 'Noto Sans KR' with high-contrast font weights and sizes (e.g., 4rem for hero text) to emphasize authority.
-2.  **Color Palette:** Use `oklch` for vibrant, perceptually uniform colors (Primary: Deep Blue, Secondary: Medical Teal).
-3.  **Depth & Texture:**
-    *   Apply subtle grain/noise texture to backgrounds for a premium feel.
-    *   Use multi-layered `box-shadow` to create a sense of "lift" for cards.
-4.  **Interactivity:** Smooth transitions and "glow" effects on interactive elements.
+### **Tech Stack**
+*   **HTML5 / CSS3 (Baseline)**
+*   **Vanilla JavaScript (ES Modules, Web Components)**
+*   **Google Fonts (Noto Sans KR)**
 
-## Plan for Current Request (Content & UI Update)
-
-1.  **Research-Driven Content Update:** 
-    *   Update `main.js` to replace placeholders with real data: **VT301** (Regulatory T Cell Therapy for Alzheimer's), **VT012** (Herbal formula for neurogenesis), and clinical status (US FDA Phase 1/2a).
-2.  **Visual Overhaul:**
-    *   Revise `style.css` with modern CSS features (`oklch`, container queries, `:has()`).
-    *   Enhance component templates in `main.js` with better styling and structural layout.
-3.  **Deployment Verification:** Prepare for Cloudflare Pages integration.
+## **Current Task: 다크모드/화이트모드 추가 및 배포**
+*   [x] `style.css`에 다크모드 변수 추가 및 전역 전환 효과 적용.
+*   [x] `main.js`의 Web Components 스타일을 전역 변수 참조 방식으로 변경.
+*   [x] `main-header`에 테마 토글 버튼 및 로직 구현.
+*   [x] 테마 초기화 및 `localStorage` 연동 스크립트 추가.
+*   [x] Git을 통한 변경사항 커밋 및 푸시.

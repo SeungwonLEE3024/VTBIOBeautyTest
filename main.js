@@ -2,13 +2,13 @@
 const sharedStyles = `
   :host {
     display: block;
-    --primary: oklch(45.2% 0.16 250.2);
-    --accent: oklch(65% 0.15 190.1);
-    --text-bold: oklch(25% 0.02 250);
-    --text-regular: oklch(45% 0.02 250);
-    --bg-surface: oklch(100% 0 0);
-    --shadow-md: 0 8px 16px -4px oklch(0% 0 0 / 8%), 0 4px 8px -4px oklch(0% 0 0 / 4%);
-    --shadow-lg: 0 20px 25px -5px oklch(0% 0 0 / 10%), 0 10px 10px -5px oklch(0% 0 0 / 4%);
+    --primary: var(--primary);
+    --accent: var(--accent);
+    --text-bold: var(--text-bold);
+    --text-regular: var(--text-regular);
+    --bg-surface: var(--bg-surface);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
   }
   .container {
     max-width: 1200px;
@@ -28,17 +28,36 @@ class MainHeader extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    this.render();
+  }
+
+  render() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const themeIcon = currentTheme === 'dark' ? '☀️' : '🌙';
+    
     this.shadowRoot.innerHTML = `
       <style>
         ${sharedStyles}
         header {
-          background: rgba(255, 255, 255, 0.8);
+          background: var(--header-bg);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           position: sticky;
           top: 0;
           z-index: 1000;
           border-bottom: 1px solid oklch(0% 0 0 / 5%);
+          transition: background 0.3s ease;
         }
         header .container {
           height: 80px;
@@ -51,6 +70,11 @@ class MainHeader extends HTMLElement {
           font-weight: 900;
           color: var(--primary);
           letter-spacing: -0.05em;
+        }
+        .nav-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
         }
         nav {
           display: flex;
@@ -66,18 +90,45 @@ class MainHeader extends HTMLElement {
         nav a:hover {
           color: var(--accent);
         }
+        .theme-toggle {
+          background: var(--bg-surface);
+          border: 1px solid var(--primary);
+          color: var(--text-bold);
+          padding: 0.5rem;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 1.2rem;
+          transition: all 0.3s ease;
+          box-shadow: var(--shadow-sm);
+        }
+        .theme-toggle:hover {
+          transform: scale(1.1);
+          box-shadow: var(--shadow-md);
+        }
       </style>
       <header>
         <div class="container">
           <div class="logo">VT BIO</div>
-          <nav>
-            <a href="#pipeline">파이프라인</a>
-            <a href="#research">연구 및 기술</a>
-            <a href="#video">홍보 영상</a>
-          </nav>
+          <div class="nav-wrapper">
+            <nav>
+              <a href="#pipeline">파이프라인</a>
+              <a href="#research">연구 및 기술</a>
+              <a href="#video">홍보 영상</a>
+            </nav>
+            <button class="theme-toggle" id="theme-btn">
+              ${themeIcon}
+            </button>
+          </div>
         </div>
       </header>
     `;
+
+    this.shadowRoot.getElementById('theme-btn').addEventListener('click', () => this.toggleTheme());
   }
 }
 
@@ -96,7 +147,7 @@ class HeroSection extends HTMLElement {
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          background: var(--primary);
+          background: oklch(45.2% 0.16 250.2); /* Keep dark blue for hero */
         }
         .hero-bg {
           position: absolute;
@@ -122,6 +173,7 @@ class HeroSection extends HTMLElement {
           line-height: 1.1;
           margin-bottom: 1.5rem;
           letter-spacing: -0.02em;
+          color: white;
         }
         p {
           font-size: clamp(1.1rem, 3vw, 1.5rem);
@@ -134,7 +186,7 @@ class HeroSection extends HTMLElement {
           display: inline-block;
           padding: 0.5rem 1.5rem;
           background: var(--accent);
-          color: var(--primary);
+          color: oklch(45.2% 0.16 250.2);
           border-radius: 100px;
           font-weight: 800;
           font-size: 0.8rem;
@@ -190,7 +242,7 @@ class PipelineSection extends HTMLElement {
           border-radius: 24px;
           box-shadow: var(--shadow-md);
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          border: 1px solid oklch(0% 0 0 / 3%);
+          border: 1px solid oklch(0% 0 0 / 10%);
           position: relative;
           overflow: hidden;
         }
@@ -410,6 +462,16 @@ class MainFooter extends HTMLElement {
     `;
   }
 }
+
+// Theme Initialization
+const initTheme = () => {
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+};
+
+initTheme();
 
 customElements.define('main-header', MainHeader);
 customElements.define('hero-section', HeroSection);

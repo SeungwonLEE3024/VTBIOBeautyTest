@@ -1,12 +1,13 @@
 
 :root {
-    /* Modern OKLCH Colors */
+    /* Modern OKLCH Colors (Light Mode) */
     --primary: oklch(45.2% 0.16 250.2); /* Deep Trustworthy Blue */
     --accent: oklch(65% 0.15 190.1);  /* Medical Teal/Aqua */
     --bg-main: oklch(98% 0.01 250);   /* Near White with a hint of cool blue */
     --bg-surface: oklch(100% 0 0);    /* Pure White */
     --text-bold: oklch(25% 0.02 250);
     --text-regular: oklch(45% 0.02 250);
+    --header-bg: rgba(255, 255, 255, 0.8);
     --white: #ffffff;
     
     /* Shadows & Depth */
@@ -20,6 +21,21 @@
     --spacing-md: 2rem;
     --spacing-lg: 4rem;
     --spacing-xl: 8rem;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="dark"] {
+    --primary: oklch(70% 0.12 250);   /* Brighter Blue for Dark Mode */
+    --accent: oklch(75% 0.15 190);    /* Vibrant Teal */
+    --bg-main: oklch(15% 0.02 250);   /* Deep Navy/Black */
+    --bg-surface: oklch(20% 0.02 250); /* Darker Grey/Blue */
+    --text-bold: oklch(95% 0.01 250);
+    --text-regular: oklch(80% 0.02 250);
+    --header-bg: rgba(21, 25, 36, 0.8);
+    --shadow-sm: 0 2px 4px oklch(0% 0 0 / 30%);
+    --shadow-md: 0 8px 16px -4px oklch(0% 0 0 / 40%), 0 4px 8px -4px oklch(0% 0 0 / 20%);
+    --shadow-lg: 0 20px 25px -5px oklch(0% 0 0 / 50%), 0 10px 10px -5px oklch(0% 0 0 / 30%);
 }
 
 @layer base {

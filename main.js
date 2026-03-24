@@ -510,68 +510,135 @@ class DinnerRecommendation extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         ${sharedStyles}
+        @keyframes pulse {
+          0% { box-shadow: 0 0 0 0 oklch(65% 0.15 190.1 / 40%); }
+          70% { box-shadow: 0 0 0 20px oklch(65% 0.15 190.1 / 0%); }
+          100% { box-shadow: 0 0 0 0 oklch(65% 0.15 190.1 / 0%); }
+        }
+
         .section {
-          padding: 4rem 0;
-          background: var(--bg-surface);
-          border-radius: 32px;
-          margin: 4rem auto;
-          max-width: 800px;
+          padding: 5rem 2rem;
+          background: linear-gradient(135deg, var(--bg-surface), var(--bg-main));
+          border-radius: 40px;
+          margin: 6rem auto;
+          max-width: 900px;
           text-align: center;
           box-shadow: var(--shadow-lg);
-          border: 1px solid oklch(0% 0 0 / 5%);
+          border: 2px solid var(--accent);
+          position: relative;
+          overflow: hidden;
         }
-        h2 { margin-bottom: 1.5rem; }
-        .intro-text { margin-bottom: 2rem; color: var(--text-regular); }
+        
+        /* Decorative element */
+        .section::before {
+          content: 'MENU';
+          position: absolute;
+          top: -20px;
+          right: -10px;
+          font-size: 8rem;
+          font-weight: 900;
+          opacity: 0.03;
+          pointer-events: none;
+        }
+
+        h2 { 
+          margin-bottom: 1rem;
+          font-size: 2.2rem;
+          color: var(--primary);
+        }
+
+        .intro-text { 
+          margin-bottom: 3rem; 
+          color: var(--text-regular);
+          font-size: 1.1rem;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
         .recommend-box {
-          min-height: 150px;
+          min-height: 180px;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          margin-bottom: 2rem;
+          margin-bottom: 3rem;
+          background: oklch(0% 0 0 / 3%);
+          border-radius: 24px;
+          border: 1px dashed var(--accent);
         }
+
         #result {
-          transition: opacity 0.3s ease;
-          padding: 1rem;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          padding: 1.5rem;
         }
+
         .menu-name {
-          font-size: 2rem;
-          font-weight: 800;
+          font-size: 2.5rem;
+          font-weight: 900;
           color: var(--primary);
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.8rem;
+          text-shadow: 0 2px 10px oklch(0% 0 0 / 10%);
         }
+
         .menu-desc {
-          font-size: 1.1rem;
-          color: var(--text-regular);
+          font-size: 1.2rem;
+          color: var(--text-bold);
+          font-weight: 500;
         }
+
+        .btn-wrapper {
+          display: flex;
+          justify-content: center;
+        }
+
         .btn {
-          background: var(--primary);
-          color: white;
-          border: none;
-          padding: 1rem 2.5rem;
-          font-size: 1.1rem;
-          font-weight: 700;
-          border-radius: 100px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: var(--shadow-md);
-        }
-        .btn:hover {
-          transform: translateY(-3px);
-          box-shadow: var(--shadow-lg);
           background: var(--accent);
           color: var(--primary);
+          border: none;
+          padding: 1.2rem 3.5rem;
+          font-size: 1.3rem;
+          font-weight: 800;
+          border-radius: 100px;
+          cursor: pointer;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 10px 20px -5px oklch(65% 0.15 190.1 / 30%);
+          animation: pulse 2s infinite;
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+        }
+
+        .btn:hover {
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 20px 30px -10px oklch(65% 0.15 190.1 / 50%);
+          background: var(--primary);
+          color: white;
+          animation: none;
+        }
+
+        .btn:active {
+          transform: translateY(-2px) scale(0.98);
+        }
+
+        .icon {
+          font-size: 1.5rem;
         }
       </style>
       <section class="section container animate-in">
-        <h2>오늘의 건강한 저녁 추천</h2>
-        <p class="intro-text">혁신적인 기술만큼 중요한 것은 건강한 식단입니다. VT BIO가 추천하는 식단으로 활기를 찾으세요.</p>
+        <h2>🍽️ 오늘의 건강한 저녁 추천</h2>
+        <p class="intro-text">혁신적인 기술만큼 중요한 것은 당신의 건강한 식단입니다.<br>VT BIO가 엄선한 웰빙 메뉴로 활기찬 저녁을 시작하세요.</p>
         <div class="recommend-box">
           <div id="result">
-            <p>버튼을 눌러 추천 메뉴를 확인하세요!</p>
+            <p style="font-size: 1.1rem; opacity: 0.7;">아래 버튼을 클릭하여 추천 메뉴를 확인하세요!</p>
           </div>
         </div>
-        <button class="btn" id="recommend-btn">메뉴 추천받기</button>
+        <div class="btn-wrapper">
+          <button class="btn" id="recommend-btn">
+            <span class="icon">✨</span>
+            메뉴 추천받기
+          </button>
+        </div>
       </section>
     `;
 

@@ -855,6 +855,12 @@ class DisqusComments extends HTMLElement {
     s.src = 'https://vtbiobeautytest-pages-dev.disqus.com/embed.js';
     s.setAttribute('data-timestamp', +new Date());
     (d.head || d.body).appendChild(s);
+
+    const countScript = d.createElement('script');
+    countScript.id = 'dsq-count-scr';
+    countScript.src = '//vtbiobeautytest-pages-dev.disqus.com/count.js';
+    countScript.async = true;
+    (d.head || d.body).appendChild(countScript);
   }
 }
 

@@ -478,12 +478,36 @@ class DinnerRecommendation extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.menus = [
-      { name: '비빔밥', desc: '다양한 나물로 영양 균형을 맞춘 건강식' },
-      { name: '연어 스테이크', desc: '오메가-3가 풍부한 고단백 식단' },
-      { name: '된장찌개와 현미밥', desc: '발효 식품으로 장 건강까지 챙기는 정식' },
-      { name: '닭가슴살 샐러드', desc: '가볍지만 든든한 저칼로리 고단백 식사' },
-      { name: '두부 조림', desc: '식물성 단백질이 풍부한 담백한 메뉴' },
-      { name: '전복죽', desc: '지친 몸에 활력을 주는 보양식' }
+      { 
+        name: '비빔밥', 
+        desc: '다양한 나물로 영양 균형을 맞춘 건강식',
+        img: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?q=80&w=800&auto=format&fit=crop'
+      },
+      { 
+        name: '연어 스테이크', 
+        desc: '오메가-3가 풍부한 고단백 식단',
+        img: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=800&auto=format&fit=crop'
+      },
+      { 
+        name: '된장찌개 정식', 
+        desc: '발효 식품으로 장 건강까지 챙기는 전통 한식',
+        img: 'https://images.unsplash.com/photo-1628203520023-e1898740f917?q=80&w=800&auto=format&fit=crop'
+      },
+      { 
+        name: '닭가슴살 샐러드', 
+        desc: '가볍지만 든든한 저칼로리 고단백 식사',
+        img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop'
+      },
+      { 
+        name: '두부 웰빙 볼', 
+        desc: '식물성 단백질이 풍부한 담백하고 건강한 메뉴',
+        img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?q=80&w=800&auto=format&fit=crop'
+      },
+      { 
+        name: '전복 보양죽', 
+        desc: '지친 몸에 활력을 주는 보양식',
+        img: 'https://images.unsplash.com/photo-1553163147-622ab57be1c7?q=80&w=800&auto=format&fit=crop'
+      }
     ];
   }
 
@@ -497,12 +521,16 @@ class DinnerRecommendation extends HTMLElement {
     const menu = this.menus[randomIndex];
     
     resultDiv.style.opacity = '0';
+    resultDiv.style.transform = 'translateY(10px)';
+    
     setTimeout(() => {
       resultDiv.innerHTML = `
+        <img class="menu-img" src="${menu.img}" alt="${menu.name}">
         <div class="menu-name">${menu.name}</div>
         <div class="menu-desc">${menu.desc}</div>
       `;
       resultDiv.style.opacity = '1';
+      resultDiv.style.transform = 'translateY(0)';
     }, 300);
   }
 
@@ -529,9 +557,8 @@ class DinnerRecommendation extends HTMLElement {
           overflow: hidden;
         }
         
-        /* Decorative element */
         .section::before {
-          content: 'MENU';
+          content: 'HEALTH';
           position: absolute;
           top: -20px;
           right: -10px;
@@ -557,20 +584,35 @@ class DinnerRecommendation extends HTMLElement {
         }
 
         .recommend-box {
-          min-height: 180px;
+          min-height: 400px;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           margin-bottom: 3rem;
           background: oklch(0% 0 0 / 3%);
-          border-radius: 24px;
+          border-radius: 32px;
           border: 1px dashed var(--accent);
+          padding: 2rem;
         }
 
         #result {
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          padding: 1.5rem;
+          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .menu-img {
+          width: 100%;
+          max-width: 450px;
+          aspect-ratio: 16/10;
+          object-fit: cover;
+          border-radius: 20px;
+          margin-bottom: 1.5rem;
+          box-shadow: var(--shadow-lg);
+          border: 4px solid white;
         }
 
         .menu-name {
@@ -617,26 +659,27 @@ class DinnerRecommendation extends HTMLElement {
           animation: none;
         }
 
-        .btn:active {
-          transform: translateY(-2px) scale(0.98);
-        }
+        .icon { font-size: 1.5rem; }
 
-        .icon {
-          font-size: 1.5rem;
+        @media (max-width: 600px) {
+          .menu-name { font-size: 1.8rem; }
+          .menu-img { max-width: 100%; }
+          .recommend-box { min-height: 350px; }
         }
       </style>
       <section class="section container animate-in">
         <h2>🍽️ 오늘의 건강한 저녁 추천</h2>
-        <p class="intro-text">혁신적인 기술만큼 중요한 것은 당신의 건강한 식단입니다.<br>VT BIO가 엄선한 웰빙 메뉴로 활기찬 저녁을 시작하세요.</p>
+        <p class="intro-text">VT BIO가 제안하는 프리미엄 식단으로 균형 잡힌 하루를 마무리하세요.</p>
         <div class="recommend-box">
           <div id="result">
-            <p style="font-size: 1.1rem; opacity: 0.7;">아래 버튼을 클릭하여 추천 메뉴를 확인하세요!</p>
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🥗</div>
+            <p style="font-size: 1.1rem; opacity: 0.7;">버튼을 클릭하면 건강한 식단이 나타납니다.</p>
           </div>
         </div>
         <div class="btn-wrapper">
           <button class="btn" id="recommend-btn">
             <span class="icon">✨</span>
-            메뉴 추천받기
+            추천 식단 보기
           </button>
         </div>
       </section>

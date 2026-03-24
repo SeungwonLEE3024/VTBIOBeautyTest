@@ -473,7 +473,113 @@ const initTheme = () => {
 
 initTheme();
 
-customElements.define('main-header', MainHeader);
+class DinnerRecommendation extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.menus = [
+      { name: '비빔밥', desc: '다양한 나물로 영양 균형을 맞춘 건강식' },
+      { name: '연어 스테이크', desc: '오메가-3가 풍부한 고단백 식단' },
+      { name: '된장찌개와 현미밥', desc: '발효 식품으로 장 건강까지 챙기는 정식' },
+      { name: '닭가슴살 샐러드', desc: '가볍지만 든든한 저칼로리 고단백 식사' },
+      { name: '두부 조림', desc: '식물성 단백질이 풍부한 담백한 메뉴' },
+      { name: '전복죽', desc: '지친 몸에 활력을 주는 보양식' }
+    ];
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  getRecommendation() {
+    const randomIndex = Math.floor(Math.random() * this.menus.length);
+    const resultDiv = this.shadowRoot.getElementById('result');
+    const menu = this.menus[randomIndex];
+    
+    resultDiv.style.opacity = '0';
+    setTimeout(() => {
+      resultDiv.innerHTML = `
+        <div class="menu-name">${menu.name}</div>
+        <div class="menu-desc">${menu.desc}</div>
+      `;
+      resultDiv.style.opacity = '1';
+    }, 300);
+  }
+
+  render() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        ${sharedStyles}
+        .section {
+          padding: 4rem 0;
+          background: var(--bg-surface);
+          border-radius: 32px;
+          margin: 4rem auto;
+          max-width: 800px;
+          text-align: center;
+          box-shadow: var(--shadow-lg);
+          border: 1px solid oklch(0% 0 0 / 5%);
+        }
+        h2 { margin-bottom: 1.5rem; }
+        .intro-text { margin-bottom: 2rem; color: var(--text-regular); }
+        .recommend-box {
+          min-height: 150px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        #result {
+          transition: opacity 0.3s ease;
+          padding: 1rem;
+        }
+        .menu-name {
+          font-size: 2rem;
+          font-weight: 800;
+          color: var(--primary);
+          margin-bottom: 0.5rem;
+        }
+        .menu-desc {
+          font-size: 1.1rem;
+          color: var(--text-regular);
+        }
+        .btn {
+          background: var(--primary);
+          color: white;
+          border: none;
+          padding: 1rem 2.5rem;
+          font-size: 1.1rem;
+          font-weight: 700;
+          border-radius: 100px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: var(--shadow-md);
+        }
+        .btn:hover {
+          transform: translateY(-3px);
+          box-shadow: var(--shadow-lg);
+          background: var(--accent);
+          color: var(--primary);
+        }
+      </style>
+      <section class="section container animate-in">
+        <h2>오늘의 건강한 저녁 추천</h2>
+        <p class="intro-text">혁신적인 기술만큼 중요한 것은 건강한 식단입니다. VT BIO가 추천하는 식단으로 활기를 찾으세요.</p>
+        <div class="recommend-box">
+          <div id="result">
+            <p>버튼을 눌러 추천 메뉴를 확인하세요!</p>
+          </div>
+        </div>
+        <button class="btn" id="recommend-btn">메뉴 추천받기</button>
+      </section>
+    `;
+
+    this.shadowRoot.getElementById('recommend-btn').addEventListener('click', () => this.getRecommendation());
+  }
+}
+
+customElements.define('dinner-recommendation', DinnerRecommendation);
 customElements.define('hero-section', HeroSection);
 customElements.define('pipeline-section', PipelineSection);
 customElements.define('research-section', ResearchSection);

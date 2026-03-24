@@ -847,8 +847,14 @@ class DisqusComments extends HTMLElement {
       <section class="section container" style="padding: 4rem 2rem; background: var(--bg-surface); border-radius: 24px; margin: 4rem auto; box-shadow: var(--shadow-md);">
         <h2 style="margin-bottom: 2rem; text-align: center; color: var(--primary);">💬 커뮤니티 의견</h2>
         <div id="disqus_thread"></div>
+        <noscript>댓글을 보려면 JavaScript를 활성화하세요. <a href="https://disqus.com/?ref_noscript">Disqus 댓글 서비스</a>를 이용합니다.</noscript>
       </section>
     `;
+
+    window.disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.location.pathname;
+    };
 
     const d = document;
     const s = d.createElement('script');

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>페이지를 찾을 수 없습니다 | VT BIO</title>
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://ddbread.com/">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"></noscript>
+    <style>
+        :root {
+            --primary: oklch(45.2% 0.16 250.2);
+            --accent: oklch(65% 0.15 190.1);
+            --bg-main: oklch(98% 0.01 250);
+            --text-bold: oklch(25% 0.02 250);
+            --text-regular: oklch(45% 0.02 250);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-bold);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .code {
+            font-size: clamp(6rem, 20vw, 10rem);
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1;
+            opacity: 0.15;
+            letter-spacing: -0.05em;
+        }
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary);
+        }
+        p {
+            color: var(--text-regular);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 400px;
+            margin-bottom: 2.5rem;
+        }
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        a {
+            text-decoration: none;
+            padding: 0.8rem 2rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .logo {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: -0.05em;
+        }
+    </style>
+</head>
+<body>
+    <a class="logo" href="/">VT BIO</a>
+    <div class="code" aria-hidden="true">404</div>
+    <h1>페이지를 찾을 수 없습니다</h1>
+    <p>요청하신 페이지가 존재하지 않거나 이동되었습니다.<br>아래 링크를 통해 원하시는 정보를 찾아보세요.</p>
+    <div class="links">
+        <a href="/" class="btn-primary">홈으로 돌아가기</a>
+        <a href="/#pipeline" class="btn-secondary">파이프라인 보기</a>
+        <a href="/#partnership" class="btn-secondary">제휴 문의</a>
+    </div>
+</body>
+</html>

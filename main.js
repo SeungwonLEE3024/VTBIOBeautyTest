@@ -870,6 +870,7 @@ class DisqusComments extends HTMLElement {
   }
 }
 
+customElements.define('main-header', MainHeader);
 customElements.define('disqus-comments', DisqusComments);
 customElements.define('dinner-recommendation', DinnerRecommendation);
 customElements.define('partnership-section', PartnershipSection);
